@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Spin.cs" />
     <Compile Include="Assets\Scripts\PuzzleManager.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\DeactivateSources.cs" />
     <Compile Include="Assets\Scripts\TriggerActivate.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1106,10 +1107,6 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Rendering.Denoising.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.Rendering.Denoising.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">

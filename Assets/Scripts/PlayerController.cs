@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl)) transform.localScale = new Vector3(0.6f, 0.45f, 0.6f);
         else transform.localScale = new Vector3(0.6f, 0.9f, 0.6f);
 
-        StickToGround();
+        //StickToGround();
     }
 
     private void OnCollisionEnter(Collision collision)

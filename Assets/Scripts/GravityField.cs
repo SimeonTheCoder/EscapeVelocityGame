@@ -16,7 +16,11 @@ public class GravityField : MonoBehaviour
             foreach (var prop in GameObject.FindGameObjectsWithTag("Prop"))
             {
                 float distance = Vector3.Distance(attractor.gameObject.transform.position, prop.transform.position);
-                float massProduct = attractor.GetComponent<GravityAttractor>().mass * prop.GetComponent<Rigidbody>().mass;
+
+                float attractorMass = attractor.GetComponent<GravityAttractor>().mass;
+                float propMass = prop.GetComponent<Rigidbody>().mass;
+
+                float massProduct = attractorMass * propMass;
 
                 Vector3 dir = (attractor.gameObject.transform.position - prop.transform.position).normalized;
 
