@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,6 +8,9 @@ public class PlayerController : MonoBehaviour
 
     public float jumpStrength;
 
+    public float bobbingStrength;
+    public float bobbingFrequency;
+
     private bool onSurface;
     private bool onWall;
 
@@ -16,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private const float SidewaysMovementFactor = 0.75f;
 
     private const float AirFriction = 0.1f;
+
+    private float time;
 
     private Vector3 prevMovementDir;
 
@@ -25,9 +29,14 @@ public class PlayerController : MonoBehaviour
 
     private string tag = "";
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
+        this.time = 0f;
+
         this.onSurface = true;
         tag = "Floor";
     }
@@ -47,7 +56,7 @@ public class PlayerController : MonoBehaviour
         this.velocity += tick * accelerationWithFriction * controlCoefficient;
 
         transform.rotation *= Quaternion.Euler(0f, Input.GetAxis("Mouse X"), 0f);
-        camera.transform.rotation *= Quaternion.Euler(-Input.GetAxis("Mouse Y"), 0f, 0f);
+        camera.transform.rotation *= Quaternion.Euler(-Input.GetAxis("Mouse Y") + Mathf.Sin(time * bobbingFrequency) * bobbingStrength * this.velocity, 0f, Mathf.Cos(time * bobbingFrequency * 1.618f) * bobbingStrength * this.velocity);
 
         float vAxis = Input.GetAxis("Vertical");
         float hAxis = Input.GetAxis("Horizontal");
@@ -70,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        time += Time.deltaTime;
+
         if (Input.GetKeyDown(KeyCode.Space) && this.onSurface)
         {
             if (!this.onWall)
