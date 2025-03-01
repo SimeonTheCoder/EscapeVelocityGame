@@ -1,9 +1,12 @@
+using FMODUnity;
 using UnityEngine;
 
 public class DistanceActivate : MonoBehaviour
 {
     public int targetTag;
     public float distanceThreshold;
+
+    public StudioEventEmitter clickSound;
 
     private PuzzleManager puzzleManager;
 
@@ -30,5 +33,7 @@ public class DistanceActivate : MonoBehaviour
 
         this.on = !this.on;
         puzzleManager.SetTag(targetTag, this.on);
+
+        clickSound.Play();
     }
 }

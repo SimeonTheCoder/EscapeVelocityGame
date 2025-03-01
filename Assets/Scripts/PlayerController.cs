@@ -1,8 +1,14 @@
+using FMODUnity;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject camera;
+
+    public StudioEventEmitter footsteps;
+    public StudioEventEmitter jump_grunt;
+    public StudioEventEmitter fall_impact;
+    public StudioEventEmitter wind;
 
     public float acceleration;
 
@@ -20,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private const float AirFriction = 0.1f;
 
     private float time;
+    private float footstepsTimer;
 
     private Vector3 prevMovementDir;
 
@@ -27,15 +34,23 @@ public class PlayerController : MonoBehaviour
 
     private float velocity;
 
+    private float movementVelocity;
+    private float bobTimer;
+
     private string tag = "";
+
+    private bool windPlaying;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        windPlaying = false;
+
         Cursor.lockState = CursorLockMode.Locked;
 
         this.time = 0f;
+        this.bobTimer = 0f;
 
         this.onSurface = true;
         tag = "Floor";
@@ -56,7 +71,7 @@ public class PlayerController : MonoBehaviour
         this.velocity += tick * accelerationWithFriction * controlCoefficient;
 
         transform.rotation *= Quaternion.Euler(0f, Input.GetAxis("Mouse X"), 0f);
-        camera.transform.rotation *= Quaternion.Euler(-Input.GetAxis("Mouse Y") + Mathf.Sin(time * bobbingFrequency) * bobbingStrength * this.velocity, 0f, Mathf.Cos(time * bobbingFrequency * 1.618f) * bobbingStrength * this.velocity);
+        camera.transform.rotation *= Quaternion.Euler(-Input.GetAxis("Mouse Y") + Mathf.Sin(time * bobbingFrequency) * (bobbingStrength + bobTimer/500f) * movementVelocity * 100 / 5f * 8f, 0f, Mathf.Cos(time * bobbingFrequency * 1.618f) * bobbingStrength * this.velocity);
 
         float vAxis = Input.GetAxis("Vertical");
         float hAxis = Input.GetAxis("Horizontal");
@@ -72,6 +87,8 @@ public class PlayerController : MonoBehaviour
         Vector3 deltaPos = ( Vector3.Lerp ( prevMovementDir, movementDir, controlCoefficient ) * this.velocity ) ;
         transform.position += deltaPos;
 
+        this.movementVelocity = deltaPos.magnitude;
+
         if (vAxis == 0f && hAxis == 0f && deltaPos.magnitude < 0.02f) this.velocity = 0f;
 
         this.prevMovementDir = Vector3.Lerp ( prevMovementDir, movementDir, controlCoefficient );
@@ -79,10 +96,24 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (this.velocity > 0.04f) camera.GetComponent<Camera>().fieldOfView += Time.deltaTime * 4f;
+        else camera.GetComponent<Camera>().fieldOfView -= 0.03f * (camera.GetComponent<Camera>().fieldOfView - 85);
+
+        camera.GetComponent<Camera>().fieldOfView = Mathf.Max(85, Mathf.Min(100, camera.GetComponent<Camera>().fieldOfView));
+
         time += Time.deltaTime;
+        footstepsTimer += Time.deltaTime;
+
+        if (movementVelocity > 0.02f && footstepsTimer > Mathf.Lerp(0.4f, 0.15f, movementVelocity * 10f) && onSurface)
+        {
+            footsteps.Play();
+            footstepsTimer = 0f;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && this.onSurface)
         {
+            jump_grunt.Play();
+
             if (!this.onWall)
             {
                 GetComponent<Rigidbody>().AddForce(transform.up * jumpStrength);
@@ -98,6 +129,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl)) transform.localScale = new Vector3(0.6f, 0.45f, 0.6f);
         else transform.localScale = new Vector3(0.6f, 0.9f, 0.6f);
 
+        if (!onSurface)
+        {
+            bobTimer += Time.deltaTime;
+        }
+
+        if (!onSurface && !windPlaying)
+        {
+            wind.Play();
+            windPlaying = true;
+        }
+
         //StickToGround();
     }
 
@@ -105,6 +147,15 @@ public class PlayerController : MonoBehaviour
     {
         this.materialFriction = collision.collider.material.dynamicFriction;
         this.onSurface = true;
+
+        this.windPlaying = false;
+        this.wind.Stop();
+        this.bobTimer = 0f;
+
+        if (this.tag == "Floor")
+        {
+            this.fall_impact.Play();
+        }
 
         this.tag = collision.collider.tag;
     }
