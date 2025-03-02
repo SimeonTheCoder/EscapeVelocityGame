@@ -6,6 +6,8 @@ public class Transition : MonoBehaviour
 {
     public KeyHolder player;
 
+    public Fade blackScreen;
+
     private bool inside = false;
     public int offset;
 
@@ -50,6 +52,8 @@ public class Transition : MonoBehaviour
             }
 
             isTicking = true;
+
+            blackScreen.FadeIn(this.delay);
 
             if(!isAutomatic) door.Play();
         }

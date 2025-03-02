@@ -5,8 +5,11 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject camera;
 
+    public GameObject footstepsObject;
+
     public StudioEventEmitter footsteps;
     public StudioEventEmitter jump_grunt;
+    public StudioEventEmitter wall_jump;
     public StudioEventEmitter fall_impact;
     public StudioEventEmitter wind;
 
@@ -73,6 +76,8 @@ public class PlayerController : MonoBehaviour
         transform.rotation *= Quaternion.Euler(0f, Input.GetAxis("Mouse X"), 0f);
         camera.transform.rotation *= Quaternion.Euler(-Input.GetAxis("Mouse Y") + Mathf.Sin(time * bobbingFrequency) * (bobbingStrength + bobTimer/500f) * movementVelocity * 100 / 5f * 8f, 0f, Mathf.Cos(time * bobbingFrequency * 1.618f) * bobbingStrength * this.velocity);
 
+        camera.transform.eulerAngles = new Vector3(camera.transform.eulerAngles.x, camera.transform.eulerAngles.y, -Input.GetAxis("Horizontal") * 2f);
+
         float vAxis = Input.GetAxis("Vertical");
         float hAxis = Input.GetAxis("Horizontal");
 
@@ -92,6 +97,8 @@ public class PlayerController : MonoBehaviour
         if (vAxis == 0f && hAxis == 0f && deltaPos.magnitude < 0.02f) this.velocity = 0f;
 
         this.prevMovementDir = Vector3.Lerp ( prevMovementDir, movementDir, controlCoefficient );
+
+        footsteps.transform.position = this.transform.position + movementDir * 1000f;
     }
 
     void Update()
@@ -112,14 +119,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && this.onSurface)
         {
-            jump_grunt.Play();
-
             if (!this.onWall)
             {
+                jump_grunt.Play();
                 GetComponent<Rigidbody>().AddForce(transform.up * jumpStrength);
             }
             else
             {
+                wall_jump.Play();
                 GetComponent<Rigidbody>().AddForce((transform.forward + transform.up * 1.3f) * jumpStrength * 1.5f);
             }
 
@@ -152,12 +159,20 @@ public class PlayerController : MonoBehaviour
         this.wind.Stop();
         this.bobTimer = 0f;
 
+        onWall = false;
+
+        this.tag = collision.collider.tag;
+
         if (this.tag == "Floor")
         {
             this.fall_impact.Play();
         }
+        else if (this.tag == "Wall")
+        {
+            onWall = true;
+        }
 
-        this.tag = collision.collider.tag;
+        Debug.Log(this.onWall);
     }
 
     void StickToGround()

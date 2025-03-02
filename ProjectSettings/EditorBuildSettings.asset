@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
   - enabled: 1
+    path: Assets/Scenes/MAIN_MENU.unity
+    guid: 19fef7571bdcf2f4e8243a57fb2d8268
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: ca5ddcad5291a8f4ca457ac274809ff3
+  - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 1af1e5849d1610e4b968c0cc1bd74e57
   - enabled: 1
