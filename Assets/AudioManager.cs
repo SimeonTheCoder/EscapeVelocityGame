@@ -19,14 +19,34 @@ public class AudioManager : MonoBehaviour
 
     private bool paused = false;
 
+    void ReadChannel(Bus bus, Slider volume, string name)
+    {
+        float val = PlayerPrefs.GetFloat(name);
+
+        bus.setVolume(val);
+        volume.value = val;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (!SystemInfo.supportsRayTracing)
+        {
+            // Disable raytracing features
+            Shader.EnableKeyword("_NO_RAYTRACING");
+        }
+
         this.masterBus = RuntimeManager.GetBus("bus:/");
         this.musicBus = RuntimeManager.GetBus("bus:/Music");
         this.sfxBus = RuntimeManager.GetBus("bus:/SFX");
         this.playerBus = RuntimeManager.GetBus("bus:/Player");
         this.uiBus = RuntimeManager.GetBus("bus:/UI");
+
+        ReadChannel(masterBus, masterVolume, "master");
+        ReadChannel(musicBus, musicVolume, "music");
+        ReadChannel(sfxBus, sfxVolume, "sfx");
+        ReadChannel(playerBus, playerVolume, "player");
+        ReadChannel(uiBus, uiVolume, "ui");
 
         this.uiBus.setVolume(0f);
     }
@@ -40,6 +60,12 @@ public class AudioManager : MonoBehaviour
         this.musicBus.setVolume(musicVolume.value);
         this.sfxBus.setVolume(sfxVolume.value);
         this.playerBus.setVolume(playerVolume.value);
+
+        PlayerPrefs.SetFloat("master", masterVolume.value);
+        PlayerPrefs.SetFloat("music", musicVolume.value);
+        PlayerPrefs.SetFloat("sfx", sfxVolume.value);
+        PlayerPrefs.SetFloat("player", playerVolume.value);
+        PlayerPrefs.SetFloat("ui", uiVolume.value);
 
         this.uiBus.setVolume(0f);
     }

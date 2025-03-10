@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Fade : MonoBehaviour
@@ -9,6 +10,8 @@ public class Fade : MonoBehaviour
     private float speed;
 
     private bool ticking;
+
+    public bool excludeFromSave;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,12 +44,16 @@ public class Fade : MonoBehaviour
 
     public void FadeOut(float speed)
     {
+        if(!excludeFromSave) PlayerPrefs.SetInt("STAGE", SceneManager.GetActiveScene().buildIndex);
+
         this.speed = -speed;
         ticking = true;
     }
 
     public void FadeIn(float speed)
     {
+        if (!excludeFromSave) PlayerPrefs.SetInt("STAGE", SceneManager.GetActiveScene().buildIndex);
+
         this.speed = speed;
         ticking = true;
     }

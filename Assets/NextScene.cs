@@ -11,6 +11,8 @@ public class NextScene : MonoBehaviour
     private float time;
     private bool isTicking = false;
 
+    public int sceneIndex;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,18 +22,33 @@ public class NextScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isTicking) time += Time.deltaTime;
+        if (isTicking) time += Time.unscaledDeltaTime;
 
         if (time > delay)
         {
             SceneManager.LoadScene(
-                SceneManager.GetActiveScene().buildIndex + 1
+                this.sceneIndex
             );
         }        
     }
 
-    public void Click()
+    public void Click(int scene)
     {
+        Time.timeScale = 1f;
+
+        this.sceneIndex = scene;
+
+        if (this.sceneIndex == -1)
+        {
+            this.sceneIndex = PlayerPrefs.GetInt("STAGE");
+        }
+        else if (this.sceneIndex == -2)
+        {
+            Application.Quit();
+        }
+
+        Debug.Log("LOADING INTO: " + this.sceneIndex);
+
         isTicking = true;
 
         blackScreen.FadeIn(this.delay);
