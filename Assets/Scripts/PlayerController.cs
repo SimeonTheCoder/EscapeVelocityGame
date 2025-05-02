@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
 
     private bool windPlaying;
 
+    private float rotX;
+    private float rotY;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,6 +60,9 @@ public class PlayerController : MonoBehaviour
 
         this.onSurface = true;
         tag = "Floor";
+
+        rotX = 360 - camera.transform.eulerAngles.y;
+        rotY = camera.transform.eulerAngles.x;
     }
 
     // Update is called once per frame
@@ -73,10 +79,17 @@ public class PlayerController : MonoBehaviour
         float accelerationWithFriction = acceleration + 1 - Mathf.Exp(this.velocity / 2f) - friction * g;
         this.velocity += tick * accelerationWithFriction * controlCoefficient;
 
-        transform.rotation *= Quaternion.Euler(0f, Input.GetAxis("Mouse X"), 0f);
-        camera.transform.rotation *= Quaternion.Euler(-Input.GetAxis("Mouse Y") + Mathf.Sin(time * bobbingFrequency) * (bobbingStrength + bobTimer/500f) * movementVelocity * 100 / 5f * 8f, 0f, Mathf.Cos(time * bobbingFrequency * 1.618f) * bobbingStrength * this.velocity);
+        rotX -= Input.GetAxis("Mouse X");
+        rotY += Input.GetAxis("Mouse Y");
 
-        camera.transform.eulerAngles = new Vector3(camera.transform.eulerAngles.x, camera.transform.eulerAngles.y, -Input.GetAxis("Horizontal") * 2f);
+        rotY = Mathf.Clamp(rotY, -90f, 90f);
+
+        //transform.rotation *= Quaternion.Euler(0f, Input.GetAxis("Mouse X"), 0f);
+        //camera.transform.rotation *= Quaternion.Euler(-Input.GetAxis("Mouse Y") + Mathf.Sin(time * bobbingFrequency) * (bobbingStrength + bobTimer/500f) * movementVelocity * 100 / 5f * 8f, 0f, Mathf.Cos(time * bobbingFrequency * 1.618f) * bobbingStrength * this.velocity);
+
+        //camera.transform.eulerAngles = new Vector3(camera.transform.eulerAngles.x, camera.transform.eulerAngles.y, -Input.GetAxis("Horizontal") * 2f);
+        camera.transform.eulerAngles = new Vector3(-rotY + Mathf.Sin(time * bobbingFrequency) * (bobbingStrength + bobTimer / 500f) * movementVelocity * 100 / 5f * 8f, 360 - rotX, -Input.GetAxis("Horizontal") * 2f + Mathf.Cos(time * bobbingFrequency * 1.618f) * bobbingStrength * this.velocity);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, 360 - rotX, transform.eulerAngles.z);
 
         float vAxis = Input.GetAxis("Vertical");
         float hAxis = Input.GetAxis("Horizontal");
