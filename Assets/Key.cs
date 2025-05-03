@@ -4,6 +4,7 @@ using UnityEngine;
 public class Key : MonoBehaviour
 {
     public string keyValue;
+    public ParticleSystem particles;
     public StudioEventEmitter keyPickUpSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,6 +22,9 @@ public class Key : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         other.gameObject.GetComponent<KeyHolder>().AddKey(keyValue);
+
+        particles.gameObject.transform.parent = null;
+        particles.Play();
 
         keyPickUpSound.Play();
 

@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\PuzzleManager.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\DeactivateSources.cs" />
+    <Compile Include="Assets\ExitDoor.cs" />
     <Compile Include="Assets\Scripts\TriggerActivate.cs" />
     <Compile Include="Assets\TransitionState.cs" />
     <Compile Include="Assets\Wave.cs" />

@@ -21,7 +21,9 @@ public class Wave : MonoBehaviour
 
         this.transform.position = this.initial + new Vector3
         (
-            0f, Mathf.Sin(time), 0f
-        );
+            0f, Mathf.Sin(time * 4f), 0f
+        ) / 2f;
+
+        this.transform.rotation *= Quaternion.Euler(0f, Time.deltaTime * 360 / 2f, 0f);
     }
 }

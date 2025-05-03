@@ -7,6 +7,7 @@ public class DeactivateSources : MonoBehaviour
     private PuzzleManager puzzleManager;
 
     public StudioEventEmitter cancel;
+    public ParticleSystem particles;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,6 +21,7 @@ public class DeactivateSources : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             DeactivateWells();
+            particles.Play();
             cancel.Play();
         }
     }

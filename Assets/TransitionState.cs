@@ -25,6 +25,6 @@ public class TransitionState : MonoBehaviour
             switchSound.Play();
             other.gameObject.tag = "Prop";
         }
-        else other.gameObject.tag = "Untagged";
+        /*else other.gameObject.tag = "Untagged";*/
     }
 }
