@@ -47,6 +47,12 @@ public class PlayerController : MonoBehaviour
     private float rotX;
     private float rotY;
 
+    private float minFov = 85;
+    private float maxFov = 100;
+
+    private float lowestFov = 30;
+    private float highestFov = 140;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -117,9 +123,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (this.velocity > 0.04f) camera.GetComponent<Camera>().fieldOfView += Time.deltaTime * 4f;
-        else camera.GetComponent<Camera>().fieldOfView -= 0.03f * (camera.GetComponent<Camera>().fieldOfView - 85);
+        else camera.GetComponent<Camera>().fieldOfView -= 0.03f * (camera.GetComponent<Camera>().fieldOfView - minFov);
 
-        camera.GetComponent<Camera>().fieldOfView = Mathf.Max(85, Mathf.Min(100, camera.GetComponent<Camera>().fieldOfView));
+        camera.GetComponent<Camera>().fieldOfView = Mathf.Max(minFov, Mathf.Min(maxFov, camera.GetComponent<Camera>().fieldOfView));
+
+        minFov -= Input.GetAxis("Mouse ScrollWheel") * 20;
+        maxFov -= Input.GetAxis("Mouse ScrollWheel") * 20;
+
+        if (minFov < lowestFov || maxFov > highestFov)
+        {
+            minFov += Input.GetAxis("Mouse ScrollWheel") * 20;
+            maxFov += Input.GetAxis("Mouse ScrollWheel") * 20;
+        }
 
         time += Time.deltaTime;
         footstepsTimer += Time.deltaTime;

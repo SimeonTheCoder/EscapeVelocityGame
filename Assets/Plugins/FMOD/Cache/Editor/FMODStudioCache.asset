@@ -123,11 +123,65 @@ MonoBehaviour:
   Path: ../../../Editing/FMod/escape_velocity/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638764647665736722
+  lastModified: 638819821873265606
   FileSizes:
   - Name: Desktop
-    Value: 7697600
+    Value: 8101152
   Exists: 1
+--- !u!114 &-6302854038956077717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Light Humming
+  m_EditorClassIdentifier: 
+  Path: event:/Light Humming
+  Guid:
+    Data1: -2011724901
+    Data2: 1248708315
+    Data3: -404507969
+    Data4: 928764128
+  Banks:
+  - {fileID: -7680869272563032178}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 6456
+--- !u!114 &-5477396424683984630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Cushion Fall
+  m_EditorClassIdentifier: 
+  Path: event:/Cushion Fall
+  Guid:
+    Data1: -573530030
+    Data2: 1143452456
+    Data3: 1309865136
+    Data4: -1113928056
+  Banks:
+  - {fileID: -7680869272563032178}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1500
 --- !u!114 &-4007871545542476993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,12 +322,16 @@ MonoBehaviour:
   - {fileID: -7805477310672783827}
   - {fileID: -2392158007381017934}
   - {fileID: 2004290167217104167}
+  - {fileID: -5477396424683984630}
+  - {fileID: 5916363285080632662}
+  - {fileID: 7149494854974829190}
+  - {fileID: -6302854038956077717}
   EditorParameters: []
   MasterBanks:
   - {fileID: -7680869272563032178}
   StringsBanks:
   - {fileID: 6855841845813659688}
-  cacheTime: 638764647665757467
+  cacheTime: 638819821873290728
   cacheVersion: 131623
 --- !u!114 &1351649228814498706
 MonoBehaviour:
@@ -464,6 +522,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1280
+--- !u!114 &5916363285080632662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Buzz
+  m_EditorClassIdentifier: 
+  Path: event:/Buzz
+  Guid:
+    Data1: -398491431
+    Data2: 1159654980
+    Data3: 401119616
+    Data4: 2121820420
+  Banks:
+  - {fileID: -7680869272563032178}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 11432
 --- !u!114 &6849162198086669980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,8 +591,35 @@ MonoBehaviour:
   Path: ../../../Editing/FMod/escape_velocity/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638764647665757467
+  lastModified: 638819821873290728
   FileSizes:
   - Name: Desktop
-    Value: 1550
+    Value: 1740
   Exists: 1
+--- !u!114 &7149494854974829190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Geiger
+  m_EditorClassIdentifier: 
+  Path: event:/Geiger
+  Guid:
+    Data1: -1464994135
+    Data2: 1274972496
+    Data3: -760171358
+    Data4: -1512554587
+  Banks:
+  - {fileID: -7680869272563032178}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 12072

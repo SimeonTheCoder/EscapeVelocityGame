@@ -18,6 +18,8 @@ public class GraphicsManager : MonoBehaviour
 
     private ScreenSpaceLensFlare lensFlareEffect;
     private Bloom lensBloom;
+    private LensDistortion lensDistortion;
+    private ChromaticAberration chromaticAberration;
 
     private Fog fog;
 
@@ -31,6 +33,8 @@ public class GraphicsManager : MonoBehaviour
 
         volumeProfile.TryGet(out lensFlareEffect);
         volumeProfile.TryGet(out lensBloom);
+        volumeProfile.TryGet(out lensDistortion);
+        volumeProfile.TryGet(out chromaticAberration);
 
         volumeProfile.TryGet(out fog);
 
@@ -106,9 +110,13 @@ public class GraphicsManager : MonoBehaviour
 
     public void SetLensFlares(bool enableLensFlare)
     {
-        if (lensFlareEffect == null || lensBloom == null) return;
+        if (lensFlareEffect == null || lensBloom == null ||
+            lensDistortion == null || chromaticAberration == null) return;
+
         lensFlareEffect.active = enableLensFlare;
         lensBloom.active = enableLensFlare;
+        lensDistortion.active = enableLensFlare;
+        chromaticAberration.active = enableLensFlare;
     }
 
     public void SetVolumetrics(bool enableVolume)

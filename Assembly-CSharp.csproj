@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\GravityAttractor.cs" />
     <Compile Include="Assets\Scripts\GravityField.cs" />
     <Compile Include="Assets\Transition.cs" />
+    <Compile Include="Assets\AnimateCushion.cs" />
     <Compile Include="Assets\Scripts\Switch.cs" />
     <Compile Include="Assets\Key.cs" />
     <Compile Include="Assets\Scripts\SpawnField.cs" />
