@@ -32,6 +32,8 @@ public class Transition : MonoBehaviour
 
     public ExitDoor exitDoor;
 
+    public Light exitLight;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,6 +41,8 @@ public class Transition : MonoBehaviour
 
         doorMat.SetColor("_EmissiveColor", Color.black * 300000);
         exitMat.SetColor("_EmissiveColor", Color.black * 300000);
+
+        exitLight.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -59,6 +63,8 @@ public class Transition : MonoBehaviour
             {
                 if (!hadKeyPrevFrame) lockQuad.SetActive(false);
 
+                exitLight.gameObject.SetActive(true);
+
                 doorMat.SetColor("_EmissiveColor", Color.green * 300000);
                 exitMat.SetColor("_EmissiveColor", Color.green * 300000);
 
@@ -66,6 +72,8 @@ public class Transition : MonoBehaviour
             }
             else
             {
+                exitLight.gameObject.SetActive(false);
+
                 doorMat.SetColor("_EmissiveColor", Color.black * 300000);
                 exitMat.SetColor("_EmissiveColor", Color.black * 300000);
 
